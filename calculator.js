@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const { response } = require("express");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 const port = 3000;
@@ -15,6 +16,22 @@ app.post("/", (req, res) => {
 
   res.send("The result is : " + result);
 });
+
+// ----------------------------------------
+
+app.get("/bmicalculator", (req,res) => {
+    res.sendFile(__dirname + "/bmiCalculator.html");
+})
+
+app.post("/bmicalculator", (req,res) => {
+    var userWeight = Number(req.body.weight);
+    var userHeight = Number(req.body.height);
+
+    var bmi = (userWeight / (Math.pow(userHeight, 2))) * (10000);
+
+    res.send("Your BMI is : " + bmi);   
+
+})
 
 app.listen(port, () => {
   console.log("Server running on port " + port);
